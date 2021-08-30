@@ -7,7 +7,7 @@
     fxLayoutGap.xs="0">
 
     <div fxFlex *ngIf="dish">
-            <div fxFlex="40">
+        <div fxFlex="40">
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>
@@ -23,19 +23,14 @@
                     <button mat-button>SHARE</button>
                 </mat-card-actions>
             </mat-card>
-            </div>
-            <div fxFlex="40">
-                <h2>Comments</h2>               
-                <mat-grid-list cols="1" rowHeight="150px" *ngIf="dish.comments">
-                    <mat-grid-tile *ngFor="let comment of dish.comments">
-                        <div style="text-align: left;">
-                            <p>{{ comment.comment }}</p>
-                            <p>{{ comment.rating }} stars</p>
-                            <p>-- {{ comment.author }} {{comment.date | date}}</p>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </div>
-
+        </div>
+        <div fxFlex="40">
+            <h2>Comments</h2> 
+            <mat-list-item *ngFor="let comment of dish.comments">
+                <p matLine>{{ comment.comment }}</p>
+                <p matLine>{{ comment.rating }} stars</p>
+                <p matLine>-- {{ comment.author }} {{comment.date | date}}</p>
+            </mat-list-item>              
+        </div>
   </div>
 </div>
