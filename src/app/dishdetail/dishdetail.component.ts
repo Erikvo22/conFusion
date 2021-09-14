@@ -17,6 +17,7 @@ export class DishdetailComponent implements OnInit {
 
   @Input()
   dish!: Dish;
+  dishcopy: Dish;
   errMess: string;
   dishIds: string[];
   prev: string;
@@ -57,7 +58,7 @@ export class DishdetailComponent implements OnInit {
     .subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
     .pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
               errmess => this.errMess = <any>errmess);
   }
 
@@ -109,8 +110,13 @@ export class DishdetailComponent implements OnInit {
     //Date
     const newDate = new Date().toString();
     this.comment.date = newDate;
-    //Push
-    this.dish.comments.push(this.comment);
+    //Put
+    this.dishcopy.comments.push(this.comment);
+    this.dishservice.putDish(this.dishcopy)
+      .subscribe(dish => {
+        this.dish = dish; this.dishcopy = dish;
+      },
+      errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
     //Reset
     this.commentFormDirective.resetForm();
     this.commentForm.patchValue({
